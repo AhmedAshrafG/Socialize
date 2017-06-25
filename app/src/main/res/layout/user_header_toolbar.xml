@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.AppBarLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/AppTheme.AppBarOverlay"
+    >
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        >
+        <ImageView
+            android:layout_width="@dimen/user_avatar_size"
+            android:layout_height="@dimen/user_avatar_size"
+            android:id="@+id/avatarIV"
+            tools:src="@drawable/ic_user"
+            android:layout_marginEnd="@dimen/outer_space"
+            android:contentDescription="@string/user_avatar"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/usernameTV"
+            tools:text="Ahmed Ashraf"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:layout_gravity="center_vertical|start"
+            />
+    </android.support.v7.widget.Toolbar>
+</android.support.design.widget.AppBarLayout>

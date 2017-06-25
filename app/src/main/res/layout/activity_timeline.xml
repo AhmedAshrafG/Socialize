@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main_view"
+    android:fitsSystemWindows="true"
+    tools:appContext=".activity.TimelineActivity"
+    >
+    <include
+        layout="@layout/basic_toolbar"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/posts_recycler"
+        android:scrollbars="vertical"
+        android:layout_marginTop="@dimen/inner_space"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/post_item"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/empty_message"
+        android:text="@string/empty_timeline_message"
+        android:textColor="@color/colorAccent"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:layout_gravity="center"
+        tools:visibility="gone"
+        />
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab"
+        android:src="@drawable/fab_add"
+        android:layout_margin="@dimen/outer_space"
+        android:elevation="@dimen/default_elevation"
+        app:layout_anchor="@id/posts_recycler"
+        app:layout_anchorGravity="bottom|end"
+        />
+</android.support.design.widget.CoordinatorLayout>

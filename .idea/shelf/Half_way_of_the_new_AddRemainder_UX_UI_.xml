@@ -1,0 +1,59 @@
+<changelist name="Half_way_of_the_new_AddRemainder_UX_UI_" date="1485706441554" recycled="false">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/shelved.patch" />
+  <option name="DESCRIPTION" value="Half way of the new AddRemainder UX/UI." />
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-ldpi/calendar_icon.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/calendar_icon.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-mdpi/calendar_icon.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/calendar_icon.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-xhdpi/repeat_icon.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/repeat_icon.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-xxhdpi/calendar_icon.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/calendar_icon.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-xhdpi/calendar_icon.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/calendar_icon.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-mdpi/repeat_icon.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/repeat_icon.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-hdpi/calendar_icon.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/calendar_icon.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-ldpi/repeat_icon.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/repeat_icon.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-hdpi/repeat_icon.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/repeat_icon.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-mdpi/border_text.9.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/border_text.9.png" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="app/src/main/res/drawable-xxhdpi/repeat_icon.png" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Half_way_of_the_new_AddRemainder_UX_UI_/repeat_icon.png" />
+  </binary>
+</changelist>

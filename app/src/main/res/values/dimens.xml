@@ -1,0 +1,26 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="user_avatar_size">40dp</dimen>
+    <dimen name="default_elevation">4dp</dimen>
+    <dimen name="image_width">200dp</dimen>
+    <dimen name="zero_dimen">0dp</dimen>
+                
+    <dimen name="profile_pic_size">50dp</dimen>
+    <dimen name="camera_card_height">150dp</dimen>
+    <dimen name="corner_radius">3dp</dimen>
+    <dimen name="border_width">1dp</dimen>
+
+    <dimen name="logo_margin_top">48dp</dimen>
+    <dimen name="icon_medium_size">40dp</dimen>
+    <dimen name="chat_avatar_size">35dp</dimen>
+    <dimen name="emoji_size">28dp</dimen>
+
+    <dimen name="small_text_size">12sp</dimen>
+    <dimen name="title_text_size">20sp</dimen>
+
+    <dimen name="inner_small">4dp</dimen>
+    <dimen name="inner_space">8dp</dimen>
+    <dimen name="outer_space">16dp</dimen>
+</resources>

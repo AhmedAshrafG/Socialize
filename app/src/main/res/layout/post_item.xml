@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/inner_space"
+    android:layout_marginStart="@dimen/inner_space"
+    android:layout_marginEnd="@dimen/inner_space"
+    android:background="@drawable/bg_parent_rounded_corner"
+    app:cardElevation="@dimen/default_elevation"
+    tools:background="@color/grey"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/outer_space"
+        >
+        <include
+            layout="@layout/user_header_timestamped"
+            />
+        <TextView
+            android:id="@+id/post_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/outer_space"
+            android:gravity="center"
+            android:textStyle="bold"
+            tools:text="Post Mohem Dgaga"
+            />
+        <TextView
+            android:id="@+id/post_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/inner_space"
+            tools:text="Description bla bla bla bla bla"
+            />
+        <TextView
+            android:id="@+id/link_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/inner_small"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:textColorLink="@color/link"
+            tools:text="link hna"
+            />
+        <ImageView
+            android:id="@+id/post_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/outer_space"
+            android:background="@color/white"
+            android:contentDescription="@string/user_avatar"
+            android:src="@drawable/app_icon"
+            />
+    </LinearLayout>
+</android.support.v7.widget.CardView>

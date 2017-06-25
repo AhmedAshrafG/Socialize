@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:appContext=".main.activity.TimelineActivity">
+    <item
+        android:id="@+id/action_chat"
+        android:orderInCategory="1"
+        android:title="@string/action_chat"
+        android:icon="@drawable/ic_chat"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_profile"
+        android:orderInCategory="3"
+        android:title="@string/action_profile"
+        android:icon="@drawable/ic_edit"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_invite"
+        android:orderInCategory="2"
+        android:title="@string/action_invite"
+        android:icon="@drawable/ic_invite"
+        app:showAsAction="never"/>
+</menu>

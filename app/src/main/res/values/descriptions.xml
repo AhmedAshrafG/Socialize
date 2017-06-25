@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="user_avatar">User Avatar</string>
+    <string name="emoji_icon">Emoji Icon</string>
+    <string name="send_btn">Send Button</string>
+    <string name="app_logo">App Logo</string>
+    <string name="uploaded_image">Uploaded Image</string>
+</resources>

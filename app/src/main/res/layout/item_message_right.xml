@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:emojicon="http://schemas.android.com/apk/res-auto"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/container"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/outer_space"
+                android:paddingEnd="@dimen/outer_space"
+    >
+    <ImageView
+        android:layout_alignParentEnd="true"
+        android:layout_width="@dimen/chat_avatar_size"
+        android:layout_height="@dimen/chat_avatar_size"
+        android:adjustViewBounds="true"
+        android:id="@+id/user_avatar"
+        android:src="@drawable/ic_user"
+        android:layout_alignBottom="@id/chat_message_view"
+        android:contentDescription="@string/user_avatar"
+        />
+    <me.himanshusoni.chatmessageview.ChatMessageView
+        android:layout_toStartOf="@+id/user_avatar"
+        android:id="@id/chat_message_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cmv_arrowGravity="end"
+        app:cmv_arrowMargin="@dimen/inner_small"
+        app:cmv_arrowPosition="right"
+        app:cmv_backgroundColor="@color/colorAccent"
+        app:cmv_backgroundColorPressed="#FFBABABA"
+        app:cmv_contentPadding="@dimen/inner_space"
+        app:cmv_cornerRadius="@dimen/inner_small"
+        app:cmv_showArrow="true"
+       >
+
+    <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
+        android:textColor="@color/white"
+        android:textIsSelectable="true"
+        tools:text="Alessandr sdlsdklsd \n slkdlskdlks \nsdlkslkds dsdso"
+        android:id="@+id/chat_message_tv"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        emojicon:emojiconSize="@dimen/emoji_size"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_file"
+            android:layout_below="@+id/chat_message_tv"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@string/user_avatar"
+            />
+    </me.himanshusoni.chatmessageview.ChatMessageView>
+
+    <TextView
+        tools:text="22/06/2016"
+        android:id="@+id/timestamp"
+        android:visibility="gone"
+        android:layout_marginEnd="@dimen/inner_space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/chat_message_view"
+        android:layout_below="@id/chat_message_view"
+        android:textSize="@dimen/small_text_size"
+        tools:visibility="visible"
+        />
+
+</RelativeLayout>

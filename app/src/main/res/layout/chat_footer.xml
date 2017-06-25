@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/inner_small"
+    >
+    <ImageView
+        android:id="@+id/emoji_btn"
+        android:layout_width="@dimen/icon_medium_size"
+        android:layout_height="@dimen/icon_medium_size"
+        android:padding="@dimen/inner_small"
+        android:src="@drawable/emoji_1f603"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/message_input"
+        android:contentDescription="@string/emoji_icon"
+        />
+    <hani.momanii.supernova_emoji_library.Helper.EmojiconEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/message_input"
+        android:layout_toStartOf="@+id/btn_send_message"
+        android:layout_toEndOf="@+id/emoji_btn"
+        emojicon:emojiconSize="@dimen/emoji_size"
+        />
+    <ImageView
+        android:id="@+id/btn_send_message"
+        android:src="@drawable/ic_send"
+        android:layout_width="@dimen/icon_medium_size"
+        android:layout_height="@dimen/icon_medium_size"
+        android:padding="@dimen/inner_small"
+        android:layout_alignBottom="@+id/message_input"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/send_btn"
+        />
+</RelativeLayout>

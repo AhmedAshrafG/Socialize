@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/main_view"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:appContext=".activity.PictureCommentActivity"
+    >
+    <include
+        layout="@layout/user_header_toolbar"
+        />
+    <com.ahmedz.socialize.view.TouchImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/imageView"
+        tools:src="@drawable/app_icon"
+        android:scaleType="fitCenter"
+        android:layout_margin="@dimen/outer_space"
+        />
+    <include
+        layout="@layout/chat_footer"
+        />
+</LinearLayout>

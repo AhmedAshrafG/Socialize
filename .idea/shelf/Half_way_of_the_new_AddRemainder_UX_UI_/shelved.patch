@@ -1,0 +1,457 @@
+Index: app/src/main/java/io/mobilestudio/mwada/backend/FireBaseDBHelper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/io/mobilestudio/mwada/backend/FireBaseDBHelper.java	(date 1485082668000)
++++ app/src/main/java/io/mobilestudio/mwada/backend/FireBaseDBHelper.java	(revision )
+@@ -222,6 +222,16 @@
+ 				.map(aVoid -> categoryUID);
+ 	}
+ 
++	public Observable<String> pushRemainderCategory(String groupUID, String categoryName) {
++		String categoryUID = reference.child(CATEGORIES_NODE).push().getKey();
++		DatabaseReference categoryRef = reference
++				.child(POSTS_NODE)
++				.child(groupUID)
++				.child(categoryName);
++		return RxFireBaseDB.setValue(categoryRef, new CategoryModel(categoryUID, categoryName))
++				.map(aVoid -> categoryUID);
++	}
++
+ 	public Observable<String> pushPost(String categoryUID, PostModel postModel) {
+ 		DatabaseReference categoryRef = reference.child(CATEGORIES_NODE).child(categoryUID);
+ 		return RxFireBaseDB.setValue(categoryRef.push(), postModel)
+\ No newline at end of file
+Index: app/src/main/java/io/mobilestudio/mwada/controller/activity/AddRemainderActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/io/mobilestudio/mwada/controller/activity/AddRemainderActivity.java	(date 1485082668000)
++++ app/src/main/java/io/mobilestudio/mwada/controller/activity/AddRemainderActivity.java	(revision )
+@@ -9,6 +9,7 @@
+ import android.widget.EditText;
+ import android.widget.ImageView;
+ import android.widget.RadioGroup;
++import android.widget.Spinner;
+ import android.widget.TextView;
+ 
+ import java.util.List;
+@@ -29,35 +30,24 @@
+ 
+ public class AddRemainderActivity extends AuthActivity {
+ 	private final String TAG = this.getClass().getSimpleName();
+-	@Bind({R.id.user_nickname, R.id.title_text, R.id.description_text, R.id.link_text, R.id.upload_photo, R.id.post_btn, R.id.event_date_label, R.id.event_time_label, R.id.event_date_tv, R.id.event_time_tv, R.id.private_radio, R.id.shared_radio, R.id.event_config_label, R.id.notification_before})
++	@Bind({R.id.info_tv, R.id.title_text, R.id.description_text, R.id.remainder_btn, R.id.event_date_tv, R.id.event_time_tv, R.id.other_text})
+ 	List<TextView> textViewList;
+ 	@Bind(R.id.toolbar)
+ 	Toolbar toolbar;
+-	@Bind(R.id.user_avatar)
+-	ImageView userAvatar;
+-	@Bind(R.id.user_nickname)
+-	TextView userNickname;
+ 	@Bind(R.id.title_text)
+ 	EditText titleText;
+ 	@Bind(R.id.description_text)
+ 	EditText descriptionText;
+-	@Bind(R.id.upload_check)
+-	ImageView uploadCheck;
+-	@Bind(R.id.link_text)
+-	EditText linkText;
+ 	@Bind(R.id.event_date_tv)
+-	TextView dateTv;
++	EditText dateTv;
+ 	@Bind(R.id.event_time_tv)
+-	TextView timeTv;
+-	@Bind(R.id.category_group)
+-	RadioGroup categoryGroup;
+-	@Bind(R.id.notification_before)
+-	EditText notificationBefore;
++	EditText timeTv;
++	@Bind(R.id.category_spinner)
++	Spinner categorySpinner;
++	@Bind(R.id.other_text)
++	EditText otherText;
+ 	private String groupUID;
+ 	private String userUID;
+-	private String avatarUri;
+-	private String nickname;
+-	private Uri imageUri;
+ 	private String partnerEmail;
+ 	private Date date;
+ 
+@@ -69,24 +59,11 @@
+ 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+ 		setExtras();
+ 		initDate();
+-		setupViews();
+ 		applyFont(textViewList);
+ 	}
+ 
+ 	private void initDate() {
+ 		date = new Date().init();
+-		dateTv.setText(date.getDateFormatted());
+-		timeTv.setText(date.getTimeFormatted());
+-	}
+-
+-	private void setupViews() {
+-		PicassoCache.getInst()
+-				.load(Uri.parse(avatarUri))
+-				.placeholder(R.drawable.progress_placeholder)
+-				.error(R.drawable.ic_user)
+-				.transform(new CircleTransform())
+-				.into(userAvatar);
+-		userNickname.setText(nickname);
+ 	}
+ 
+ 	@OnClick(R.id.event_date_tv)
+Index: app/src/main/res/layout/content_add_remainder.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/content_add_remainder.xml	(date 1485082668000)
++++ app/src/main/res/layout/content_add_remainder.xml	(revision )
+@@ -1,230 +1,92 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+-            android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+-            android:background="@color/grey"
++            android:orientation="vertical"
++            android:background="@color/white"
+             android:layoutDirection="rtl"
+             android:textDirection="rtl">
+-    <LinearLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="match_parent"
++            android:layout_margin="@dimen/activity_horizontal_margin"
+-        android:orientation="vertical">
++            android:orientation="vertical">
+-        <android.support.v7.widget.CardView
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:layout_marginLeft="@dimen/feed_item_margin"
+-            android:layout_marginRight="@dimen/feed_item_margin"
+-            android:layout_marginTop="@dimen/feed_item_margin"
+-            android:paddingTop="@dimen/feed_item_padding_top_bottom"
+-            android:paddingBottom="@dimen/feed_item_padding_top_bottom"
+-            android:background="@drawable/bg_parent_rounded_corner"
+-            app:cardElevation="4dp">
+-            <LinearLayout
+-                android:layout_width="match_parent"
+-                android:layout_height="match_parent"
+-                android:orientation="vertical">
+-                <LinearLayout
+-                    android:layout_width="match_parent"
+-                    android:layout_height="wrap_content"
+-                    android:paddingTop="@dimen/feed_item_padding_top_bottom"
+-                    android:paddingBottom="@dimen/feed_item_padding_top_bottom"
+-                    android:paddingLeft="@dimen/feed_item_padding_left_right"
+-                    android:paddingRight="@dimen/feed_item_padding_left_right"
+-                    android:layout_gravity="center"
+-                    android:gravity="center"
+-                    android:orientation="horizontal">
+-                    <ImageView
+-                        android:id="@+id/user_avatar"
+-                        android:src="@drawable/ic_photo"
+-                        android:layout_width="@dimen/feed_item_profile_pic"
+-                        android:layout_height="@dimen/feed_item_profile_pic"
+-                        android:scaleType="fitCenter">
+-                    </ImageView>
+-                    <TextView
++            <TextView
+-                        android:id="@+id/user_nickname"
+-                        android:layout_width="match_parent"
++                android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
++                android:layout_height="wrap_content"
+-                        android:paddingStart="@dimen/feed_item_profile_info_padd"
+-                        android:paddingLeft="@dimen/feed_item_profile_info_padd"
+-                        android:text="Ahmed Ashraf"
+-                        android:textSize="@dimen/feed_item_profile_name"
+-                        android:textStyle="bold"/>
+-                </LinearLayout>
++                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
++                android:id="@+id/info_tv"
++                android:layout_marginBottom="@dimen/medium_margin"
++                android:text="@string/add_remainder_info"
++                />
+-                <EditText
+-                    android:layout_width="match_parent"
+-                    android:layout_height="wrap_content"
++            <EditText
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
+-                    android:paddingLeft="@dimen/feed_item_padding_left_right"
+-                    android:paddingRight="@dimen/feed_item_padding_left_right"
++                android:padding="@dimen/medium_padding"
++                android:layout_marginBottom="@dimen/medium_margin"
+-                    android:lines="1"
++                android:lines="1"
++                android:background="@drawable/border_text"
+-                    android:id="@+id/title_text"
+-                    android:hint="@string/post_title"/>
+-                <EditText
+-                    android:layout_width="match_parent"
+-                    android:layout_height="150dp"
+-                    android:layout_weight="1"
++                android:id="@+id/title_text"
++                android:hint="@string/post_title"/>
++            <EditText
++                android:layout_width="match_parent"
++                android:layout_height="150dp"
++                android:layout_weight="1"
+-                    android:paddingLeft="@dimen/feed_item_padding_left_right"
+-                    android:paddingRight="@dimen/feed_item_padding_left_right"
+-                    android:paddingBottom="@dimen/feed_item_padding_top_bottom"
++                android:padding="@dimen/medium_padding"
++                android:layout_marginBottom="@dimen/medium_margin"
+-                    android:gravity="top"
+-                    android:id="@+id/description_text"
++                android:gravity="top"
++                android:id="@+id/description_text"
++                android:background="@drawable/border_text"
+-                    android:hint="@string/post_description"/>
++                android:hint="@string/post_description"/>
+-                <ImageView
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:paddingLeft="@dimen/feed_item_padding_left_right"
+-                    android:paddingRight="@dimen/feed_item_padding_left_right"
+-                    android:paddingBottom="@dimen/feed_item_padding_top_bottom"
+-                    android:id="@+id/upload_check"
+-                    android:src="@drawable/app_icon"
+-                    android:layout_gravity="center"
+-                    android:visibility="gone"
+-                    />
+-                <EditText
+-                    android:layout_width="match_parent"
+-                    android:layout_height="wrap_content"
++            <EditText
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
+-                    android:id="@+id/upload_photo"
++                android:id="@+id/event_time_tv"
++                android:padding="@dimen/medium_padding"
++                android:layout_marginBottom="@dimen/medium_margin"
++                android:lines="1"
+-                    android:focusable="false"
+-                    android:focusableInTouchMode="false"
+-                    android:clickable="true"
++                android:focusable="false"
++                android:focusableInTouchMode="false"
++                android:clickable="true"
+-                    android:drawableRight="@drawable/ic_photo"
+-                    android:drawablePadding="@dimen/drawable_padding"
+-                    android:paddingLeft="@dimen/feed_item_padding_left_right"
+-                    android:paddingRight="@dimen/feed_item_padding_left_right"
+-                    android:paddingBottom="@dimen/feed_item_padding_top_bottom"
+-                    android:hint="@string/post_image"/>
++                android:background="@drawable/border_text"
++                android:hint="الوقت"/>
+-                <EditText
+-                    android:layout_width="match_parent"
+-                    android:layout_height="wrap_content"
++            <EditText
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
+-                    android:drawableRight="@drawable/ic_link"
+-                    android:drawablePadding="@dimen/drawable_padding"
+-                    android:paddingLeft="@dimen/feed_item_padding_left_right"
+-                    android:paddingRight="@dimen/feed_item_padding_left_right"
+-                    android:paddingBottom="@dimen/feed_item_padding_top_bottom"
+-                    android:id="@+id/link_text"
+-                    android:hint="@string/post_link"/>
+-                <RadioGroup
++                android:id="@+id/event_date_tv"
++                android:padding="@dimen/medium_padding"
++                android:layout_marginBottom="@dimen/medium_margin"
++                android:drawableLeft="@drawable/calendar_icon"
++                android:lines="1"
++                android:focusable="false"
++                android:focusableInTouchMode="false"
++                android:clickable="true"
++                android:background="@drawable/border_text"
++                android:hint="التاريخ"/>
++            <Spinner
+-                    android:layout_width="match_parent"
++                android:layout_width="match_parent"
+-                    android:layout_height="match_parent"
+-                    android:id="@+id/category_group"
+-                    android:paddingLeft="@dimen/feed_item_padding_left_right"
+-                    android:paddingRight="@dimen/feed_item_padding_left_right"
+-                    android:paddingBottom="@dimen/feed_item_padding_top_bottom"
+-                    android:orientation="horizontal">
+-
+-                    <android.support.v7.widget.AppCompatRadioButton
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
++                android:layout_height="wrap_content"
+-                        android:layout_weight="1"
+-                        android:checked="true"
+-                        android:id="@+id/private_radio"
+-                        android:text="@string/private_radio"/>
+-
+-                    <android.support.v7.widget.AppCompatRadioButton
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:layout_weight="1"
+-                        android:id="@+id/shared_radio"
+-                        android:text="@string/shared_radio"/>
+-                </RadioGroup>
+-            </LinearLayout>
+-        </android.support.v7.widget.CardView>
+-
+-        <android.support.v7.widget.CardView
+-            android:layout_width="match_parent"
+-            android:layout_height="match_parent"
+-            android:layout_marginLeft="@dimen/feed_item_margin"
+-            android:layout_marginRight="@dimen/feed_item_margin"
+-            android:layout_marginTop="@dimen/feed_item_margin"
+-            android:paddingTop="@dimen/feed_item_padding_top_bottom"
+-            android:paddingBottom="@dimen/feed_item_padding_top_bottom"
+-            android:background="@drawable/bg_parent_rounded_corner"
+-            app:cardElevation="4dp">
+-            <LinearLayout
+-                android:layout_width="match_parent"
+-                android:layout_height="match_parent"
+-                android:orientation="vertical">
+-                <TextView
+-                    android:layout_width="wrap_content"
+-                    android:layout_height="wrap_content"
+-                    android:id="@+id/event_config_label"
+-                    android:layout_marginTop="@dimen/medium_margin"
+-                    android:layout_marginBottom="@dimen/medium_margin"
++                android:layout_marginBottom="@dimen/medium_margin"
+-                    android:layout_marginRight="@dimen/medium_margin"
+-                    android:textStyle="bold"
+-                    android:text="اعدادات الحدث"
++                android:id="@+id/category_spinner"
++                style="@style/spinner_style"
+-                    />
++                />
+-                <GridLayout
+-                    android:layout_width="match_parent"
+-                    android:layout_height="match_parent"
+-                    android:rowCount="2"
+-                    android:columnCount="2"
+-                    android:useDefaultMargins="true">
+-                    <TextView
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:id="@+id/event_date_label"
+-                        android:layout_columnWeight="1"
+-                        android:layout_rowWeight="1"
+-                        android:textAppearance="?android:attr/textAppearanceMedium"
+-                        android:text="@string/date_label"
+-                        android:gravity="center"
+-                        />
+-                    <TextView
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:id="@+id/event_time_label"
+-                        android:layout_columnWeight="1"
+-                        android:layout_rowWeight="1"
+-                        android:textAppearance="?android:attr/textAppearanceMedium"
+-                        android:text="@string/time_label"
+-                        android:gravity="center"
+-                        />
+-                    <TextView
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:id="@+id/event_date_tv"
+-                        android:layout_columnWeight="1"
+-                        android:layout_rowWeight="1"
+-                        android:textAppearance="?android:attr/textAppearanceMedium"
+-                        android:text="10-12-2016"
+-                        android:gravity="center"
+-                        android:padding="@dimen/medium_padding"
+-                        android:textColor="@color/colorPrimaryDark"/>
+-                    <TextView
+-                        android:layout_width="wrap_content"
+-                        android:layout_height="wrap_content"
+-                        android:id="@+id/event_time_tv"
+-                        android:layout_columnWeight="1"
+-                        android:layout_rowWeight="1"
+-                        android:textAppearance="?android:attr/textAppearanceMedium"
+-                        android:text="9:30"
+-                        android:gravity="center"
+-                        android:padding="@dimen/medium_padding"
+-                        android:textColor="@color/colorPrimaryDark"/>
+-                </GridLayout>
+-                <EditText
+-                    android:layout_width="match_parent"
+-                    android:layout_height="wrap_content"
++            <EditText
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
+-                    android:id="@+id/notification_before"
+-                    android:inputType="number"
+-                    android:lines="1"
+-                    android:hint="التنبيه قبل أيام..."
+-                    android:paddingRight="@dimen/feed_item_padding_left_right"
++                android:id="@+id/other_text"
++                android:padding="@dimen/medium_padding"
++                android:layout_marginBottom="@dimen/medium_margin"
++                android:hint="@string/category_other"
++                android:background="@drawable/border_text"
+-                    />
++                />
+-            </LinearLayout>
+-        </android.support.v7.widget.CardView>
+-        <Button
++            <Button
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:layout_marginTop="@dimen/feed_item_margin"
+-            android:layout_marginBottom="@dimen/feed_item_margin"
+-            android:layout_marginLeft="@dimen/feed_item_margin"
+-            android:layout_marginRight="@dimen/feed_item_margin"
++                android:layout_width="wrap_content"
++                android:layout_height="40dp"
++                android:layout_gravity="center"
+-            android:id="@+id/post_btn"
++                android:id="@+id/post_btn"
+-            android:text="@string/post_button"
+-            android:background="@color/colorPrimaryDark"
++                android:text="@string/remainder_button"
++                android:background="@drawable/cornered_button"
+-            android:textColor="@android:color/white"/>
+-    </LinearLayout>
++                android:textColor="@android:color/white"/>
++        </LinearLayout>
+ </ScrollView>
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(date 1485082668000)
++++ app/src/main/res/values/strings.xml	(revision )
+@@ -53,8 +53,8 @@
+     <string name="error_upload">A problem occurred while uploading!</string>
+     <string name="message_text">message_text</string>
+     <string name="category_uid">category_uid</string>
+-    <string name="post_title">العنوان...</string>
+-    <string name="post_description">الموضوع...</string>
++    <string name="post_title">عنوان التنبيه</string>
++    <string name="post_description">موضوع التنبيه</string>
+     <string name="post_button">اعرض</string>
+     <string name="post_link">الرابط..</string>
+     <string name="post_image">الصورة..</string>
+@@ -120,4 +120,7 @@
+     <string name="sign_up_description">بيانات تعريفية</string>
+     <string name="gender_title">النوع</string>
+     <string name="old_remainders">Old Remainders</string>
++    <string name="add_remainder_info">لإضافة تنبيه برجاء تكملة البيانات التالية:</string>
++    <string name="remainder_button">حفظ</string>
++    <string name="category_other">نوع آخر</string>
+ </resources>
