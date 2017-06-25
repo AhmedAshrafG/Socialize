@@ -40,7 +40,7 @@ public class PostActivity extends LoadingActivity {
 	ImageView uploadCheck;
 	@Bind(R.id.link_text)
 	EditText linkText;
-	@Bind(R.id.upload_photo) EditText uploadPhoto;
+	@Bind(R.id.choose_photo) EditText uploadPhoto;
 	@Bind(R.id.post_btn) Button postButton;
 	private String groupUID;
 	private String userUID;
@@ -61,7 +61,7 @@ public class PostActivity extends LoadingActivity {
 	private void setupViews() {
 		PicassoCache.with()
 				.load(Uri.parse(avatarUri))
-				.error(R.drawable.ic_user)
+				.error(R.drawable.ic_person)
 				.transform(new CircleTransform())
 				.into(userAvatar);
 		userNickname.setText(nickname);
@@ -106,7 +106,7 @@ public class PostActivity extends LoadingActivity {
 				});
 	}
 
-	@OnClick(R.id.upload_photo)
+	@OnClick(R.id.choose_photo)
 	public void uploadPhoto() {
 		purposeManager.getPhotoFromGallery()
 				.subscribe(result -> {

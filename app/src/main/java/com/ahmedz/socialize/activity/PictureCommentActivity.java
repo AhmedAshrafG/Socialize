@@ -70,7 +70,7 @@ public class PictureCommentActivity extends LoadingActivity {
 
 		PicassoCache.with()
 				.load(Uri.parse(avatarUrl))
-				.error(R.drawable.ic_user)
+				.error(R.drawable.ic_person)
 				.resizeDimen(R.dimen.user_avatar_size, R.dimen.user_avatar_size)
 				.centerCrop()
 				.transform(new CircleTransform()).into(avatarIV);

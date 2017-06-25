@@ -46,18 +46,16 @@
                         android:layout_height="wrap_content"
                         android:inputType="textAutoComplete"
                         android:hint="@string/username"
-                        android:drawableTint="@color/colorAccent"
                         android:maxLines="1"
                         android:layout_marginBottom="@dimen/inner_space"
                         android:drawablePadding="@dimen/inner_space"
-                        android:drawableStart="@drawable/ic_contact"
+                        android:drawableStart="@drawable/ic_person"
                         />
                     <EditText
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_email"
-                        android:drawableTint="@color/colorAccent"
                         android:maxLines="1"
                         android:inputType="textEmailAddress"
                         android:layout_marginBottom="@dimen/inner_space"
@@ -71,7 +69,6 @@
                         android:layout_marginBottom="@dimen/inner_space"
                         android:drawablePadding="@dimen/inner_space"
                         android:hint="@string/hint_password"
-                        android:drawableTint="@color/colorAccent"
                         android:maxLines="1"
                         android:inputType="textPassword"
                         android:drawableStart="@drawable/ic_lock"
@@ -82,7 +79,6 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/inner_space"
                         android:hint="@string/hint_repeat_password"
-                        android:drawableTint="@color/colorAccent"
                         android:maxLines="1"
                         android:inputType="textPassword"
                         android:drawableStart="@drawable/ic_lock"
@@ -95,7 +91,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/action_sign_in_short"
                 android:textColor="@color/white"
-                android:background="@color/colorPrimaryDark"
                 android:layout_marginTop="@dimen/outer_space"
                 />
             <TextView

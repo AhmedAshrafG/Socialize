@@ -8,10 +8,10 @@
     android:orientation="horizontal"
     >
     <ImageView
-        android:id="@+id/user_avatar"
-        android:src="@drawable/ic_photo"
         android:layout_width="@dimen/profile_pic_size"
         android:layout_height="@dimen/profile_pic_size"
+        android:id="@+id/user_avatar"
+        android:src="@drawable/ic_person"
         android:scaleType="fitCenter"
         android:contentDescription="@string/user_avatar"
         />

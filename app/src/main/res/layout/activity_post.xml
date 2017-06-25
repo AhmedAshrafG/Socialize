@@ -26,7 +26,6 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_parent_rounded_corner"
                 android:layout_marginBottom="@dimen/outer_space"
                 app:cardElevation="@dimen/default_elevation"
                 >
@@ -72,12 +71,11 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/upload_photo"
+                        android:id="@+id/choose_photo"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
                         android:clickable="true"
                         android:drawableEnd="@drawable/ic_photo"
-                        android:drawableTint="@color/colorAccent"
                         android:drawablePadding="@dimen/inner_space"
                         android:paddingBottom="@dimen/inner_space"
                         android:hint="@string/post_image"
@@ -100,7 +98,6 @@
                 android:id="@+id/post_btn"
                 android:layout_marginBottom="@dimen/inner_space"
                 android:text="@string/post_button"
-                android:background="@color/colorPrimaryDark"
                 android:textColor="@android:color/white"
                 />
         </LinearLayout>

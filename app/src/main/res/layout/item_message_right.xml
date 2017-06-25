@@ -16,7 +16,7 @@
         android:layout_height="@dimen/chat_avatar_size"
         android:adjustViewBounds="true"
         android:id="@+id/user_avatar"
-        android:src="@drawable/ic_user"
+        android:src="@drawable/ic_person"
         android:layout_alignBottom="@id/chat_message_view"
         android:contentDescription="@string/user_avatar"
         />
@@ -25,6 +25,7 @@
         android:id="@id/chat_message_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="end"
         app:cmv_arrowGravity="end"
         app:cmv_arrowMargin="@dimen/inner_small"
         app:cmv_arrowPosition="right"
@@ -41,7 +42,6 @@
         tools:text="Alessandr sdlsdklsd \n slkdlskdlks \nsdlkslkds dsdso"
         android:id="@+id/chat_message_tv"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         emojicon:emojiconSize="@dimen/emoji_size"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"

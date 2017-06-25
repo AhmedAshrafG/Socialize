@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
+ext.support_version = "25.4.0"
 
 android {
     compileSdkVersion 25
@@ -28,15 +29,12 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     // MaterialDesign
-    compile 'com.android.support:appcompat-v7:25.4.0'
-    compile 'com.android.support:design:25.4.0'
-    compile 'com.android.support:recyclerview-v7:25.4.0'
+    compile "com.android.support:appcompat-v7:$support_version"
+    compile "com.android.support:design:$support_version"
+    compile "com.android.support:recyclerview-v7:$support_version"
+    compile "com.android.support:support-core-utils:$support_version"
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.afollestad.material-dialogs:core:0.8.5.9'
-    compile 'com.github.clans:fab:1.6.4'
-    compile('com.mikepenz:materialdrawer:5.9.3@aar') {
-        transitive = true
-    }
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
     // FireBase
     compile 'com.google.firebase:firebase-core:10.0.1'
     compile 'com.google.firebase:firebase-messaging:10.0.1'
@@ -56,8 +54,8 @@ dependencies {
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar'
     compile "com.github.miguelbcr:RxPaparazzo:0.5.3-2.x"
     // Chat libraries
-    compile 'hani.momanii.supernova_emoji_library:supernova-emoji-library:0.0.2'
-    compile 'me.himanshusoni.chatmessageview:chat-message-view:1.0.3'
+    compile 'com.github.hani-momanii:SuperNova-Emoji:1.1'
+    compile 'me.himanshusoni.chatmessageview:chat-message-view:1.0.7'
     // Utilities
     compile 'commons-io:commons-io:2.5'
     compile 'com.nbsp:library:1.1'

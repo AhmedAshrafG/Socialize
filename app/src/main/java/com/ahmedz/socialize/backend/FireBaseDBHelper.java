@@ -1,7 +1,5 @@
 package com.ahmedz.socialize.backend;
 
-import android.net.Uri;
-
 import com.ahmedz.socialize.backend.FCM.CloudMessenger;
 import com.ahmedz.socialize.model.ChatActivityInfo;
 import com.ahmedz.socialize.model.ChatMessageModel;
@@ -9,7 +7,6 @@ import com.ahmedz.socialize.model.GroupModel;
 import com.ahmedz.socialize.model.ImageMessageInfo;
 import com.ahmedz.socialize.model.PostModel;
 import com.ahmedz.socialize.model.UserModel;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -190,12 +187,6 @@ public class FireBaseDBHelper {
 	}
 
 	public Completable createUser(String imageUri, String username, String userEmail) {
-		UserProfileChangeRequest.Builder profileUpdates = new UserProfileChangeRequest.Builder()
-				.setDisplayName(username);
-
-		if (isValid(imageUri))
-			profileUpdates.setPhotoUri(Uri.parse(imageUri));
-
 		String userUID = escapeEmail(userEmail);
 		DatabaseReference groupRef = reference.child(GROUPS_NODE).push();
 		DatabaseReference chatRef = reference.child(CHAT_NODE).push();
@@ -229,9 +220,21 @@ public class FireBaseDBHelper {
 	public Completable updateProfile(String userEmail, String avatar, String nickname) {
 		String userUID = escapeEmail(userEmail);
 		DatabaseReference userRef = reference.child(USERS_NODE).child(userUID);
+
 		HashMap<String, Object> map = new HashMap<>();
 		map.put(AVATAR_CHILD, avatar);
 		map.put(NICKNAME_CHILD, nickname);
+
+		return RxFirebaseDatabase.updateChildren(userRef, map);
+	}
+
+	public Completable updateProfile(String userEmail, String nickname) {
+		String userUID = escapeEmail(userEmail);
+		DatabaseReference userRef = reference.child(USERS_NODE).child(userUID);
+
+		HashMap<String, Object> map = new HashMap<>();
+		map.put(NICKNAME_CHILD, nickname);
+
 		return RxFirebaseDatabase.updateChildren(userRef, map);
 	}
 }

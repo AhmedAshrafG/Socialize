@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -19,8 +18,10 @@ import com.ahmedz.socialize.view.PicassoCache;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import io.reactivex.Completable;
 
 import static com.ahmedz.socialize.utils.Util.escapeEmail;
+import static com.ahmedz.socialize.utils.Util.isValid;
 
 public class ProfileActivity extends AuthActivity {
 
@@ -29,13 +30,9 @@ public class ProfileActivity extends AuthActivity {
 	Toolbar toolbar;
 	@Bind(R.id.username)
 	EditText inputUsername;
-	@Bind(R.id.upload_photo)
-	View uploadImageView;
-	@Bind(R.id.save_changes_button)
-	Button saveButton;
 	@Bind(R.id.uploaded_imageView)
 	ImageView uploadedImage;
-	private Uri imagePath;
+	private Uri imageUri;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,19 +58,19 @@ public class ProfileActivity extends AuthActivity {
 		inputUsername.setText(userModel.getNickName());
 		PicassoCache.with()
 				.load(Uri.parse(userModel.getAvatar()))
-				.error(R.drawable.ic_user)
+				.error(R.drawable.ic_person)
 				.into(uploadedImage);
 	}
 
-	@OnClick(R.id.upload_photo)
-	public void uploadPhoto() {
+	@OnClick(R.id.choose_photo)
+	public void choosePhoto() {
 		purposeManager.getPhotoFromGallery()
 				.subscribe(result -> {
 					Intent intent = result.data();
 					int resultCode = result.resultCode();
 					if (resultCode == RESULT_OK) {
-						imagePath = intent.getData();
-						Log.d(TAG, "Photo onResult: " + imagePath);
+						imageUri = intent.getData();
+						Log.d(TAG, "Photo onResult: " + imageUri);
 						PicassoCache.with()
 								.load(intent.getData())
 								.into(uploadedImage);
@@ -88,10 +85,19 @@ public class ProfileActivity extends AuthActivity {
 			inputUsername.setError(getString(R.string.input_empty_error));
 			return;
 		}
-		FireBaseStorageHelper.getInst()
-				.putFile(getUserEmail(), imagePath)
-				.flatMapCompletable(imageUri ->
-						FireBaseDBHelper.getInst().updateProfile(getUserEmail(), imageUri, username))
+
+		Completable updateCompletable;
+		if (isValid(imageUri))
+			updateCompletable = FireBaseStorageHelper.getInst()
+					.putFile(getUserEmail(), imageUri)
+					.flatMapCompletable(imageUri ->
+							FireBaseDBHelper.getInst()
+									.updateProfile(getUserEmail(), imageUri, username));
+		else
+			updateCompletable = FireBaseDBHelper.getInst()
+					.updateProfile(getUserEmail(), username);
+
+		updateCompletable
 				.doOnSubscribe(disposable -> setLoading())
 				.doFinally(this::setLoaded)
 				.subscribe(() -> {

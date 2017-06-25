@@ -15,7 +15,7 @@
         android:layout_width="@dimen/chat_avatar_size"
         android:layout_height="@dimen/chat_avatar_size"
         android:id="@+id/user_avatar"
-        android:src="@drawable/ic_user"
+        android:src="@drawable/ic_person"
         android:layout_alignBottom="@+id/chat_message_view"
         android:contentDescription="@string/user_avatar"
         />

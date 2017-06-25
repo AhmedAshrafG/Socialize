@@ -12,7 +12,8 @@
 
     <stroke
         android:width="@dimen/corner_radius"
-        android:color="@color/colorAccent" />
+        android:color="@color/colorAccent"
+        />
 
     <size
         android:height="100dp"

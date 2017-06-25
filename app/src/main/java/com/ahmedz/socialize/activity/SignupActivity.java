@@ -20,7 +20,6 @@ import com.ahmedz.socialize.view.PicassoCache;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import io.reactivex.Completable;
 
 public class SignupActivity extends AuthActivity {
 
@@ -63,7 +62,7 @@ public class SignupActivity extends AuthActivity {
 		finish();
 	}
 
-	@OnClick(R.id.upload_photo)
+	@OnClick(R.id.choose_photo)
 	public void uploadPhoto() {
 		purposeManager.getPhotoFromGallery()
 				.subscribe(result -> {
@@ -120,16 +119,9 @@ public class SignupActivity extends AuthActivity {
 								.putFile(email, imagePath)
 								.doOnComplete(() -> Log.i(TAG, "signUpClicked: image uploaded!"))
 								.flatMapCompletable(imageUri ->
-										Completable.mergeArray(
-												updateUserProfile(username, imageUri),
-												FireBaseDBHelper.getInst().createUser(imageUri, username, email)
-										)
-								);
+										FireBaseDBHelper.getInst().createUser(imageUri, username, email));
 					} else {
-						return Completable.mergeArray(
-								updateUserProfile(username),
-								FireBaseDBHelper.getInst().createUser(username, email)
-						);
+						return FireBaseDBHelper.getInst().createUser(username, email);
 					}
 				})
 				.doOnComplete(() -> Log.i(TAG, "signUpClicked: user signed up successfully!"))

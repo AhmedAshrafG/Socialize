@@ -107,7 +107,7 @@ public class PostsRecyclerAdapter extends FirebaseRecyclerAdapter<PostModel,Post
 		public void setAvatar(String avatarUri) {
 			PicassoCache.with()
 					.load(Uri.parse(avatarUri))
-					.error(R.drawable.ic_user)
+					.error(R.drawable.ic_person)
 					.transform(new CircleTransform())
 					.into(userAvatar);
 		}

@@ -6,12 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    tools:background="@color/grey"
     android:layout_marginBottom="@dimen/inner_space"
     android:layout_marginStart="@dimen/inner_space"
     android:layout_marginEnd="@dimen/inner_space"
-    android:background="@drawable/bg_parent_rounded_corner"
     app:cardElevation="@dimen/default_elevation"
-    tools:background="@color/grey"
     >
     <LinearLayout
         android:layout_width="match_parent"

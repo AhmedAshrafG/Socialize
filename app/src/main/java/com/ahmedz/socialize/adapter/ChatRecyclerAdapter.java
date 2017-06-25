@@ -146,7 +146,7 @@ public class ChatRecyclerAdapter extends FirebaseRecyclerAdapter<ChatMessageMode
 			Picasso.with(mContext)
 					.load(Uri.parse(avatarUri))
 					.placeholder(R.drawable.progress_placeholder)
-					.error(R.drawable.ic_user)
+					.error(R.drawable.ic_person)
 					.transform(new CircleTransform())
 					.into(userAvatar);
 		}

@@ -21,14 +21,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
-
-import static com.ahmedz.socialize.utils.Util.isValid;
 
 
 
@@ -91,23 +88,9 @@ public abstract class AuthActivity extends LoadingActivity implements FirebaseAu
 		return authenticator.createUser(email, password);
 	}
 
-	Completable updateUserProfile(String username, String imageUri) {
-		UserProfileChangeRequest.Builder profileUpdates = new UserProfileChangeRequest.Builder()
-				.setDisplayName(username);
-
-		if (isValid(imageUri))
-			profileUpdates.setPhotoUri(Uri.parse(imageUri));
-		return authenticator.updateUserProfile(profileUpdates.build());
-	}
-
-	Completable updateUserProfile(String username) {
-		return updateUserProfile(username, "");
-	}
-
 	Completable getUserCreationObservable(String imageUri, String username, String email) {
-		Completable updateObservable = updateUserProfile(username, imageUri);
 		Completable createUserObservable = FireBaseDBHelper.getInst().createUser(imageUri, username, email);
-		return Completable.mergeArray(updateObservable, createUserObservable);
+		return createUserObservable;
 	}
 
 	Completable resetPassword(String userEmail) {

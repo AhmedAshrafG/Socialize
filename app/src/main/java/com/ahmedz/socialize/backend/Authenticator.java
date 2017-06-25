@@ -24,12 +24,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.UserProfileChangeRequest;
 
 import org.json.JSONObject;
 
 import durdinapps.rxfirebase2.RxFirebaseAuth;
-import durdinapps.rxfirebase2.RxFirebaseUser;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
@@ -74,10 +72,6 @@ public class Authenticator {
 
 	public Maybe<AuthResult> createUser(String email, String password) {
 		return RxFirebaseAuth.createUserWithEmailAndPassword(mAuth, email, password);
-	}
-
-	public Completable updateUserProfile(UserProfileChangeRequest profileUpdates) {
-		return RxFirebaseUser.updateProfile(mAuth.getCurrentUser(), profileUpdates);
 	}
 
 	public void addAuthListener(AuthStateListener authListener) {
