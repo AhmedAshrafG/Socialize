@@ -12,12 +12,10 @@
         android:id="@+id/action_profile"
         android:orderInCategory="3"
         android:title="@string/action_profile"
-        android:icon="@drawable/ic_edit"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_invite"
         android:orderInCategory="2"
         android:title="@string/action_invite"
-        android:icon="@drawable/ic_invite"
         app:showAsAction="never"/>
 </menu>

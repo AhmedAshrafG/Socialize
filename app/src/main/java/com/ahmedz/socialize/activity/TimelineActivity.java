@@ -1,6 +1,7 @@
 package com.ahmedz.socialize.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ahmedz.socialize.R;
@@ -18,8 +20,17 @@ import com.ahmedz.socialize.backend.FireBaseDBHelper;
 import com.ahmedz.socialize.callback.ItemCountChangeListener;
 import com.ahmedz.socialize.callback.PostItemListener;
 import com.ahmedz.socialize.model.UserModel;
+import com.ahmedz.socialize.view.PicassoCache;
 import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.firebase.database.Query;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 
 import java.util.List;
 
@@ -29,6 +40,9 @@ import rx_activity_result2.RxActivityResult;
 
 public class TimelineActivity extends AuthActivity implements PostItemListener, ItemCountChangeListener {
 
+	private static final int CHAT_IDENTIFIER = 0;
+	private static final int PROFILE_IDENTIFIER = 1;
+	private static final int INVITATION_IDENTIFIER = 2;
 	private final String TAG = this.getClass().getSimpleName();
 	@Bind(R.id.toolbar)
 	Toolbar toolbar;
@@ -40,6 +54,7 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
 	private PostsRecyclerAdapter postsAdapter;
 	private List<UserModel> userModelList;
 	private UserModel userModel;
+	private Drawer drawer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +83,72 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
 					this.userModelList = userModelList;
 					this.userModel = getCurrentUserModel(getUserEmail());
 					populatePosts();
+					setupMaterialDrawer();
 				}, throwable -> {
 					throwable.printStackTrace();
 					showToast(R.string.default_error_message);
 				});
+	}
+
+	private void setupMaterialDrawer() {
+		DrawerImageLoader.init(new AbstractDrawerImageLoader() {
+               @Override
+               public void set(ImageView imageView, Uri uri, Drawable placeholder) {
+                   PicassoCache.with()
+	                       .load(uri)
+		                   .placeholder(placeholder)
+	                       .error(R.drawable.ic_person)
+	                       .into(imageView);
+               }
+               @Override
+               public void cancel(ImageView imageView) {
+                   PicassoCache.with()
+		                   .cancelRequest(imageView);
+               }
+           });
+		AccountHeader accountHeader = new AccountHeaderBuilder()
+				.withActivity(this)
+				.withHeaderBackground(R.drawable.drawer_header_bg)
+				.addProfiles(
+						new ProfileDrawerItem()
+								.withName(userModel.getNickName())
+								.withEmail(userModel.getEmail())
+								.withIcon(Uri.parse(userModel.getAvatar()))
+				)
+				.build();
+
+		PrimaryDrawerItem chatItem = new PrimaryDrawerItem().withIdentifier(CHAT_IDENTIFIER).withIcon(R.drawable.ic_drawer_chat).withName(R.string.action_chat);
+		PrimaryDrawerItem profileItem = new PrimaryDrawerItem().withIdentifier(PROFILE_IDENTIFIER).withIcon(R.drawable.ic_drawer_edit).withName(R.string.action_profile);
+		PrimaryDrawerItem inviteItem = new PrimaryDrawerItem().withIdentifier(INVITATION_IDENTIFIER).withIcon(R.drawable.ic_invite).withName(R.string.action_invite);
+
+		drawer = new DrawerBuilder()
+				.withActivity(this)
+				.withToolbar(toolbar)
+				.withTranslucentStatusBar(false)
+				.withActionBarDrawerToggleAnimated(true)
+				.withSelectedItem(-1)
+				.withCloseOnClick(true)
+				.withAccountHeader(accountHeader)
+				.addDrawerItems(
+						chatItem,
+						profileItem,
+						inviteItem
+				)
+				.withOnDrawerItemClickListener((view, position, drawerItem) -> {
+					long id = drawerItem.getIdentifier();
+					if (id == CHAT_IDENTIFIER)
+						startChatActivity();
+					else if (id == PROFILE_IDENTIFIER)
+						startProfileActivity();
+					else if (id == INVITATION_IDENTIFIER)
+						sendInvitation();
+
+					drawer.setSelection(-1);
+					drawer.closeDrawer();
+
+					return true;
+				})
+				.build();
 	}
 
 	private UserModel getCurrentUserModel(String userEmail) {
