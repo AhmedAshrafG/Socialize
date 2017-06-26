@@ -56,7 +56,7 @@ public class ProfileActivity extends AuthActivity {
 	}
 	private void bindViews(UserModel userModel) {
 		inputUsername.setText(userModel.getNickName());
-		PicassoCache.with()
+		PicassoCache.get()
 				.load(Uri.parse(userModel.getAvatar()))
 				.error(R.drawable.ic_person)
 				.into(uploadedImage);
@@ -71,7 +71,7 @@ public class ProfileActivity extends AuthActivity {
 					if (resultCode == RESULT_OK) {
 						imageUri = intent.getData();
 						Log.d(TAG, "Photo onResult: " + imageUri);
-						PicassoCache.with()
+						PicassoCache.get()
 								.load(intent.getData())
 								.into(uploadedImage);
 					}

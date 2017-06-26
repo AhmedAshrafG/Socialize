@@ -22,6 +22,10 @@ public class PostModel {
 		this.timeInMillis = getCurrentTime();
 	}
 
+	public PostModel(String userUID, String title, String description, String link) {
+		this(userUID, title, description, link, "");
+	}
+
 	public String getUserUID() {
 		return userUID;
 	}

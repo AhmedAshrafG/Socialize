@@ -77,6 +77,7 @@ public class PostsRecyclerAdapter extends FirebaseRecyclerAdapter<PostModel,Post
 	    viewHolder.setAvatar(ownerModel.getAvatar());
 	    viewHolder.setImageFile(postModel.getImageFile(), listener);
 	    viewHolder.setLink(postModel.getLink(), listener);
+		viewHolder.setPostClickListener(listener, postModel);
     }
 
 	private UserModel getOwnerModel(String userUID) {
@@ -98,14 +99,15 @@ public class PostsRecyclerAdapter extends FirebaseRecyclerAdapter<PostModel,Post
 	    @Bind(R.id.user_avatar) ImageView userAvatar;
 		@Bind(R.id.post_image) ImageView imageView;
 		@Bind(R.id.link_text) TextView link_text;
+		@Bind(R.id.post_container) View postContainer;
 
-        public PostViewHolder(View view) {
+		public PostViewHolder(View view) {
             super(view);
 	        ButterKnife.bind(this, view);
         }
 
 		public void setAvatar(String avatarUri) {
-			PicassoCache.with()
+			PicassoCache.get()
 					.load(Uri.parse(avatarUri))
 					.error(R.drawable.ic_person)
 					.transform(new CircleTransform())
@@ -134,7 +136,7 @@ public class PostsRecyclerAdapter extends FirebaseRecyclerAdapter<PostModel,Post
 				return;
 			}
 			imageView.setVisibility(View.VISIBLE);
-			PicassoCache.with()
+			PicassoCache.get()
 					.load(Uri.parse(imageUri))
 					.into(imageView);
 
@@ -155,6 +157,13 @@ public class PostsRecyclerAdapter extends FirebaseRecyclerAdapter<PostModel,Post
 						listener.onActionClicked(link);
 				});
 			}
+		}
+
+		public void setPostClickListener(PostItemListener listener, PostModel postModel) {
+			postContainer.setOnClickListener(view -> {
+				if (listener != null)
+					listener.onPostClicked(postModel);
+			});
 		}
 	}
 }

@@ -68,14 +68,14 @@ public class PictureCommentActivity extends LoadingActivity {
 
 		usernameTV.setText(username);
 
-		PicassoCache.with()
+		PicassoCache.get()
 				.load(Uri.parse(avatarUrl))
 				.error(R.drawable.ic_person)
 				.resizeDimen(R.dimen.user_avatar_size, R.dimen.user_avatar_size)
 				.centerCrop()
 				.transform(new CircleTransform()).into(avatarIV);
 
-		PicassoCache.with()
+		PicassoCache.get()
 				.load(Uri.parse(imageUrl))
 				.into(imageView);
 	}

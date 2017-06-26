@@ -71,4 +71,8 @@
     <string name="fullscreen_mode_toast">FullScreen Mode</string>
     <string name="invalid_intent">No application found to handle this request!</string>
     <string name="title_activity_signin">Signin</string>
+    <string name="title_extra">title</string>
+    <string name="imageUri_extra">imageUri</string>
+    <string name="desc_extra">description</string>
+    <string name="share_using">Share Using..</string>
 </resources>

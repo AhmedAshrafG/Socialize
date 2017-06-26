@@ -23,4 +23,5 @@
     <dimen name="inner_small">4dp</dimen>
     <dimen name="inner_space">8dp</dimen>
     <dimen name="outer_space">16dp</dimen>
+    <dimen name="action_bar_height">180dp</dimen>
 </resources>

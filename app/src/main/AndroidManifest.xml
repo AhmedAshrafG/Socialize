@@ -145,6 +145,15 @@
                 android:value=".activity.MainActivity"
                 />
         </activity>
+        <activity
+            android:name=".activity.PostDetailsActivity"
+            android:label=""
+            android:parentActivityName=".controller.activity.ContentActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="io.mobilestudio.mwada.controller.activity.ContentActivity"/>
+        </activity>
     </application>
 
 </manifest>

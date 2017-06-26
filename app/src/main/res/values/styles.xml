@@ -22,4 +22,8 @@
         <item name="android:background">@color/colorAccent</item>
     </style>
 
+    <style name="accentToolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:textColorPrimary">@color/colorAccent</item>
+    </style>
+
 </resources>

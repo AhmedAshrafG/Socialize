@@ -35,7 +35,7 @@ public class PicassoCache {
 	 *
 	 * @return Picasso instance
 	 */
-	public static Picasso with() {
+	public static Picasso get() {
 
 		if (picassoInstance == null) {
 

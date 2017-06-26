@@ -19,6 +19,7 @@ import com.ahmedz.socialize.adapter.PostsRecyclerAdapter;
 import com.ahmedz.socialize.backend.FireBaseDBHelper;
 import com.ahmedz.socialize.callback.ItemCountChangeListener;
 import com.ahmedz.socialize.callback.PostItemListener;
+import com.ahmedz.socialize.model.PostModel;
 import com.ahmedz.socialize.model.UserModel;
 import com.ahmedz.socialize.view.PicassoCache;
 import com.google.android.gms.appinvite.AppInviteInvitation;
@@ -94,7 +95,7 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
 		DrawerImageLoader.init(new AbstractDrawerImageLoader() {
                @Override
                public void set(ImageView imageView, Uri uri, Drawable placeholder) {
-                   PicassoCache.with()
+                   PicassoCache.get()
 	                       .load(uri)
 		                   .placeholder(placeholder)
 	                       .error(R.drawable.ic_person)
@@ -102,7 +103,7 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
                }
                @Override
                public void cancel(ImageView imageView) {
-                   PicassoCache.with()
+                   PicassoCache.get()
 		                   .cancelRequest(imageView);
                }
            });
@@ -242,6 +243,15 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
 		intent.putExtra(getString(R.string.nickname), userModel.getNickName());
 		intent.putExtra(getString(R.string.avatar), userModel.getAvatar());
 		intent.putExtra(getString(R.string.full_screen_image), imageUriStr);
+		startActivity(intent);
+	}
+
+	@Override
+	public void onPostClicked(PostModel postModel) {
+		Intent intent = new Intent(this, PostDetailsActivity.class);
+		intent.putExtra(getString(R.string.imageUri_extra), postModel.getImageFile());
+		intent.putExtra(getString(R.string.title_extra), postModel.getTitle());
+		intent.putExtra(getString(R.string.desc_extra), postModel.getDescription());
 		startActivity(intent);
 	}
 

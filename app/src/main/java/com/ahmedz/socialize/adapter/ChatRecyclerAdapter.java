@@ -157,10 +157,10 @@ public class ChatRecyclerAdapter extends FirebaseRecyclerAdapter<ChatMessageMode
 				String imageUri = chatModel.getImageFile();
 				RequestCreator picassoRequest;
 				if (TextUtils.isEmpty(imageUri)) {
-					picassoRequest = PicassoCache.with()
+					picassoRequest = PicassoCache.get()
 							.load(R.drawable.progress_placeholder);
 				} else {
-					picassoRequest = PicassoCache.with()
+					picassoRequest = PicassoCache.get()
 							.load(Uri.parse(imageUri));
 				}
 				picassoRequest

@@ -59,7 +59,7 @@ public class PostActivity extends LoadingActivity {
 	}
 
 	private void setupViews() {
-		PicassoCache.with()
+		PicassoCache.get()
 				.load(Uri.parse(avatarUri))
 				.error(R.drawable.ic_person)
 				.transform(new CircleTransform())
@@ -91,7 +91,7 @@ public class PostActivity extends LoadingActivity {
 						return FireBaseDBHelper.getInst().pushPost(groupUID, postModel);
 					});
 		} else {
-			PostModel postModel = new PostModel(userUID, title, description, link, null);
+			PostModel postModel = new PostModel(userUID, title, description, link);
 			postCompletable = FireBaseDBHelper.getInst().pushPost(groupUID, postModel);
 		}
 		postCompletable
@@ -125,7 +125,7 @@ public class PostActivity extends LoadingActivity {
 	private void useSelectedImage(Uri uri) {
 		imageUri = uri;
 		Log.d(TAG, "Photo onResult: " + imageUri);
-		PicassoCache.with()
+		PicassoCache.get()
 				.load(uri)
 				.resizeDimen(R.dimen.image_width, R.dimen.zero_dimen)
 				.into(uploadCheck);

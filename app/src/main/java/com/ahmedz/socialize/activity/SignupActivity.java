@@ -71,7 +71,7 @@ public class SignupActivity extends AuthActivity {
 					if (resultCode == RESULT_OK) {
 						imagePath = intent.getData();
 						Log.d(TAG, "Photo onResult: " + imagePath);
-						PicassoCache.with()
+						PicassoCache.get()
 								.load(intent.getData())
 								.into(uploadedImage);
 					}
