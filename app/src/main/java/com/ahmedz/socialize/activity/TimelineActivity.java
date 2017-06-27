@@ -28,6 +28,7 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
@@ -44,6 +45,7 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
 	private static final int CHAT_IDENTIFIER = 0;
 	private static final int PROFILE_IDENTIFIER = 1;
 	private static final int INVITATION_IDENTIFIER = 2;
+	private static final int LOGOUT_IDENTIFIER = 3;
 	private final String TAG = this.getClass().getSimpleName();
 	@Bind(R.id.toolbar)
 	Toolbar toolbar;
@@ -121,6 +123,7 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
 		PrimaryDrawerItem chatItem = new PrimaryDrawerItem().withIdentifier(CHAT_IDENTIFIER).withIcon(R.drawable.ic_drawer_chat).withName(R.string.action_chat);
 		PrimaryDrawerItem profileItem = new PrimaryDrawerItem().withIdentifier(PROFILE_IDENTIFIER).withIcon(R.drawable.ic_drawer_edit).withName(R.string.action_profile);
 		PrimaryDrawerItem inviteItem = new PrimaryDrawerItem().withIdentifier(INVITATION_IDENTIFIER).withIcon(R.drawable.ic_invite).withName(R.string.action_invite);
+		PrimaryDrawerItem logoutItem = new PrimaryDrawerItem().withIdentifier(LOGOUT_IDENTIFIER).withIcon(R.drawable.ic_logout).withName(R.string.action_logout);
 
 		drawer = new DrawerBuilder()
 				.withActivity(this)
@@ -133,7 +136,9 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
 				.addDrawerItems(
 						chatItem,
 						profileItem,
-						inviteItem
+						inviteItem,
+						new DividerDrawerItem(),
+						logoutItem
 				)
 				.withOnDrawerItemClickListener((view, position, drawerItem) -> {
 					long id = drawerItem.getIdentifier();
@@ -143,6 +148,8 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
 						startProfileActivity();
 					else if (id == INVITATION_IDENTIFIER)
 						sendInvitation();
+					else if (id == LOGOUT_IDENTIFIER)
+						showLogoutDialog();
 
 					drawer.setSelection(-1);
 					drawer.closeDrawer();
@@ -168,19 +175,6 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
 		postsAdapter = new PostsRecyclerAdapter(this, this, postsQuery, userModelList);
 		postsRecycler.setLayoutManager(mLinearLayoutManager);
 		postsRecycler.setAdapter(postsAdapter);
-		postsRecycler.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
-			@Override
-			public void onChildViewAttachedToWindow(View view) {
-				if (postsAdapter.getItemCount() != 0) {
-					emptyMessage.setVisibility(View.INVISIBLE);
-				} else {
-					emptyMessage.setVisibility(View.VISIBLE);
-				}
-			}
-			@Override
-			public void onChildViewDetachedFromWindow(View view) {
-			}
-		});
 	}
 
 	private void setExtras() {

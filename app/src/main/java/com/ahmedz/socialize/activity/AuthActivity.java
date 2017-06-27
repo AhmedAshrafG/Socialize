@@ -133,18 +133,22 @@ public abstract class AuthActivity extends LoadingActivity implements FirebaseAu
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()){
 			case R.id.action_signout:
-				showConfirmationDialog(
-						positive -> {
-							if (positive)
-								signOut();
-						},
-						getString(R.string.logout_title),
-						getString(R.string.logout_content),
-						getString(R.string.dialog_yes), getString(R.string.dialog_cancel)
-				);
+				showLogoutDialog();
 				break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	protected void showLogoutDialog() {
+		showConfirmationDialog(
+				positive -> {
+					if (positive)
+						signOut();
+				},
+				getString(R.string.logout_title),
+				getString(R.string.logout_content),
+				getString(R.string.dialog_yes), getString(R.string.dialog_cancel)
+		);
 	}
 
 	@Override
