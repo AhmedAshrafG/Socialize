@@ -106,7 +106,7 @@ public class ChatActivity extends AuthActivity implements ItemCountChangeListene
 
 	private Single<String> sendMessage(ChatMessageModel messageModel) {
 		FireBaseDBHelper.getInst()
-				.sendChatFCM(getUserEmail(), groupUID, messageModel.getMessage())
+				.sendChatFCM(getUserEmail(), userModel.getNickName(), messageModel.getMessage(), groupUID)
 				.subscribe(() -> Log.d(TAG, "chatFCM: done"), Throwable::printStackTrace);
 
 		return FireBaseDBHelper.getInst()

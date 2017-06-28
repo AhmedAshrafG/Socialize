@@ -90,8 +90,8 @@ public class FireBaseDBHelper {
 		return RxFirebaseDatabase.observeSingleValueEvent(tokenRef, String.class);
 	}
 
-	public Completable sendChatFCM(String userEmail, String groupUID, String messageText) {
-		return CloudMessenger.getInstance().sendFCMMessage(userEmail, groupUID, messageText, TYPE_CHAT);
+	public Completable sendChatFCM(String userEmail, String senderNickname, String messageText, String groupUID) {
+		return CloudMessenger.getInstance().sendFCMMessage(userEmail, senderNickname, messageText, TYPE_CHAT, groupUID);
 	}
 
 	private Completable updateUserGroupUID(String email, String groupUID) {

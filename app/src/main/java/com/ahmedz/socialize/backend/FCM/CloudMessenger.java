@@ -32,7 +32,7 @@ public class CloudMessenger {
 		return instance;
 	}
 
-	private String sendHTTPRequest(String senderEmail, String groupUID, String pushText, String type) throws Exception {
+	private String sendHTTPRequest(String senderEmail, String senderNickname, String pushText, String type, String groupUID) throws Exception {
 		// Prepare JSON containing the GCM message content. What to send and where to send.
 		Context mContext = GlobalState.getInst().getAppContext();
 		JSONObject jFcmData = new JSONObject();
@@ -40,6 +40,7 @@ public class CloudMessenger {
 		jData.put(mContext.getString(R.string.message_FCM), pushText);
 		jData.put(mContext.getString(R.string.type_FCM), type);
 		jData.put(mContext.getString(R.string.sender_email), senderEmail);
+		jData.put(mContext.getString(R.string.sender_nickname), senderNickname);
 		// Where to send GCM message.
 		jFcmData.put("to", "/topics/"+groupUID);
 		jFcmData.put("data",jData);
@@ -65,9 +66,9 @@ public class CloudMessenger {
 		return resp;
 	}
 
-	public Completable sendFCMMessage(String userEmail, String groupUID, String pushText, String type) {
+	public Completable sendFCMMessage(String userEmail, String senderNickname, String pushText, String type, String groupUID) {
 		return Completable.fromCallable(() -> {
-			String response = sendHTTPRequest(userEmail, groupUID, pushText, type);
+			String response = sendHTTPRequest(userEmail, senderNickname, pushText, type, groupUID);
 			Log.i(TAG, "sendFCMMessage: " + response);
 			return response;
 		}).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());

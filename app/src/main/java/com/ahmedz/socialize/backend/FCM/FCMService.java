@@ -1,21 +1,20 @@
 package com.ahmedz.socialize.backend.FCM;
 
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.text.TextUtils;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.ahmedz.socialize.R;
 import com.ahmedz.socialize.activity.ChatActivity;
 import com.ahmedz.socialize.activity.MainActivity;
 import com.ahmedz.socialize.backend.Authenticator;
+import com.ahmedz.socialize.handler.AppPreference;
 import com.ahmedz.socialize.handler.GlobalState;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -23,12 +22,13 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 
 import static com.ahmedz.socialize.backend.FCM.CloudMessenger.TYPE_CHAT;
-
+import static com.ahmedz.socialize.utils.Util.isValid;
 
 
 public class FCMService extends FirebaseMessagingService {
 
 	private final String TAG = this.getClass().getSimpleName();
+	private int counter = 0;
 
 	/**
 	 * Called when message is received.
@@ -61,11 +61,11 @@ public class FCMService extends FirebaseMessagingService {
 		}
 
 		String senderEmail = map.get(getString(R.string.sender_email));
+		String senderNickname = map.get(getString(R.string.sender_nickname));
 		String currentEmail = Authenticator.getInstance().getUserEmail();
 		String messageType = map.get(getString(R.string.type_FCM));
-		// if I'm the sender or not but active, don't show notifications.
-		if (messageType.equals(TYPE_CHAT))
-			if (TextUtils.isEmpty(currentEmail) || (currentEmail != null && senderEmail.equals(currentEmail)) || GlobalState.getInst().isChatActive())
+		// if I'm the sender or active, don't show notifications.
+		if (!isValid(currentEmail) || (currentEmail != null && senderEmail.equals(currentEmail)) || GlobalState.getInst().isChatActive())
 				return;
 
 		Intent intent;
@@ -77,7 +77,7 @@ public class FCMService extends FirebaseMessagingService {
 				intent = new Intent(this, MainActivity.class);
 				break;
 		}
-		sendNotification(intent, body);
+		sendNotification(intent, body, senderNickname);
 	}
 
 	private Bitmap getLargeIcon() {
@@ -90,11 +90,18 @@ public class FCMService extends FirebaseMessagingService {
 		return icon;
 	}
 
-	private void sendNotification(Intent intent, String messageBody) {
+	private void sendNotification(Intent intent, String messageBody, String senderName) {
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
 				PendingIntent.FLAG_ONE_SHOT);
+
 		Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		int uniqueKey = AppPreference.getInstance(getApplicationContext()).getUniqueKey();
+
+		NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+		inboxStyle.setSummaryText(senderName);
+		inboxStyle.addLine(messageBody);
+
 		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
 				.setSmallIcon(getNotificationIcon())
 				.setLargeIcon(getLargeIcon())
@@ -102,11 +109,13 @@ public class FCMService extends FirebaseMessagingService {
 				.setContentText(messageBody)
 				.setAutoCancel(true)
 				.setSound(defaultSoundUri)
+				.setStyle(new NotificationCompat.MessagingStyle(messageBody))
+				.setGroup(senderName)
+				.setGroupSummary(true)
 				.setContentIntent(pendingIntent);
 
-		NotificationManager notificationManager =
-				(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		NotificationManagerCompat manager = NotificationManagerCompat.from(this);
 
-		notificationManager.notify(123456789 /* ID of notification */, notificationBuilder.build());
+		manager.notify(uniqueKey, notificationBuilder.build());
 	}
 }

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
 ext.support_version = "25.4.0"
+ext.firebase_version = "10.0.1"
 
 android {
     compileSdkVersion 25
@@ -15,10 +16,19 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            keyAlias 'socialize'
+            keyPassword 'ahmedz333'
+            storeFile file('../socialize.jks')
+            storePassword 'ahmedz333'
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -40,17 +50,17 @@ dependencies {
         transitive = true
     }
     // FireBase
-    compile 'com.google.firebase:firebase-core:10.0.1'
-    compile 'com.google.firebase:firebase-messaging:10.0.1'
-    compile 'com.google.firebase:firebase-auth:10.0.1'
-    compile 'com.google.firebase:firebase-database:10.0.1'
-    compile 'com.google.firebase:firebase-storage:10.0.1'
-    compile 'com.google.firebase:firebase-invites:10.0.1'
+    compile "com.google.firebase:firebase-core:$firebase_version"
+    compile "com.google.firebase:firebase-messaging:$firebase_version"
+    compile "com.google.firebase:firebase-auth:$firebase_version"
+    compile "com.google.firebase:firebase-database:$firebase_version"
+    compile "com.google.firebase:firebase-storage:$firebase_version"
+    compile "com.google.firebase:firebase-invites:$firebase_version"
+    compile "com.google.firebase:firebase-appindexing:$firebase_version"
     compile 'com.firebaseui:firebase-ui-database:1.0.0'
-    compile 'com.google.firebase:firebase-appindexing:10.0.1'
     // Authentication
+    compile "com.google.android.gms:play-services-auth:$firebase_version"
     compile 'com.facebook.android:facebook-android-sdk:4.17.0'
-    compile 'com.google.android.gms:play-services-auth:10.0.1'
     // RxAndroid
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     compile 'com.github.VictorAlbertos:RxActivityResult:0.4.4-2.x'

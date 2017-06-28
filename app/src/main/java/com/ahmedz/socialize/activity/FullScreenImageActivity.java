@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,17 +59,7 @@ public class FullScreenImageActivity extends LoadingActivity {
 				.load(Uri.parse(imageUrl))
 				.into(imageView);
 
-		supportPostponeEnterTransition();
-		imageView.getViewTreeObserver().addOnPreDrawListener(
-				new ViewTreeObserver.OnPreDrawListener() {
-					@Override
-					public boolean onPreDraw() {
-						imageView.getViewTreeObserver().removeOnPreDrawListener(this);
-						supportStartPostponedEnterTransition();
-						return true;
-					}
-				}
-		);
+		scheduleStartPostponedTransition(imageView);
 	}
 
 	@Override
