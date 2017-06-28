@@ -63,5 +63,6 @@
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_share"
+        android:contentDescription="@string/share_btn"
         />
 </android.support.design.widget.CoordinatorLayout>
