@@ -175,12 +175,12 @@ public class ChatActivity extends AuthActivity implements ItemCountChangeListene
 	}
 
 	@Override
-	public void imageClicked(String imageUriString) {
+	public void imageClicked(String imageUriString, ImageView imageView) {
 		Intent intent = new Intent(this, FullScreenImageActivity.class);
 		intent.putExtra(getString(R.string.nickname), userModel.getNickName());
 		intent.putExtra(getString(R.string.avatar), userModel.getAvatar());
 		intent.putExtra(getString(R.string.full_screen_image), imageUriString);
-		startActivity(intent);
+		startActivityWithSharedTransition(intent, imageView);
 	}
 
 	@Override

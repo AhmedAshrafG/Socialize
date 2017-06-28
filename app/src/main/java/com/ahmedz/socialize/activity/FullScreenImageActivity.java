@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,7 +13,6 @@ import com.ahmedz.socialize.R;
 import com.ahmedz.socialize.view.CircleTransform;
 import com.ahmedz.socialize.view.PicassoCache;
 import com.ahmedz.socialize.view.TouchImageView;
-import com.squareup.picasso.Callback;
 
 import butterknife.Bind;
 
@@ -33,6 +33,7 @@ public class FullScreenImageActivity extends LoadingActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_full_screen_image);
+		supportPostponeEnterTransition();
 
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -57,19 +58,19 @@ public class FullScreenImageActivity extends LoadingActivity {
 
 		PicassoCache.get()
 				.load(Uri.parse(imageUrl))
-				.into(imageView, new Callback() {
-					@Override
-					public void onSuccess() {
-						setLoaded();
-						showToast(getString(R.string.fullscreen_mode_toast));
-					}
+				.into(imageView);
 
+		supportPostponeEnterTransition();
+		imageView.getViewTreeObserver().addOnPreDrawListener(
+				new ViewTreeObserver.OnPreDrawListener() {
 					@Override
-					public void onError() {
-						setLoaded();
-						showToast(R.string.default_error_message);
+					public boolean onPreDraw() {
+						imageView.getViewTreeObserver().removeOnPreDrawListener(this);
+						supportStartPostponedEnterTransition();
+						return true;
 					}
-				});
+				}
+		);
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public class FullScreenImageActivity extends LoadingActivity {
 
 	@Override
 	protected boolean shouldLoadInitially() {
-		return true;
+		return false;
 	}
 
 	@Override

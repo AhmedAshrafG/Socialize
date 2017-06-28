@@ -1,9 +1,12 @@
 package com.ahmedz.socialize.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -11,7 +14,6 @@ import com.ahmedz.socialize.handler.DialogHelper;
 import com.ahmedz.socialize.handler.PurposeManager;
 
 import butterknife.ButterKnife;
-
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -23,6 +25,20 @@ public class BaseActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		dialogHelper = new DialogHelper(this);
 		purposeManager = new PurposeManager(this);
+	}
+
+	protected void startActivityWithSharedTransition(Intent intent, View view) {
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+			Bundle bundle = ActivityOptionsCompat
+					.makeSceneTransitionAnimation(
+							this,
+							view,
+							view.getTransitionName()
+					).toBundle();
+			startActivity(intent, bundle);
+		} else {
+			startActivity(intent);
+		}
 	}
 
 	@Override

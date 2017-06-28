@@ -38,9 +38,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textIsSelectable="true"
-            tools:text="Alessandr sdlsdklsd \n slkdlskdlks \nsdlkslkds dsdso"
+            tools:text="@string/chat_message_placeholder"
             emojicon:emojiconSize="@dimen/emoji_size"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:padding="@dimen/inner_small"
             />
             <ImageView
                 android:layout_width="wrap_content"
@@ -50,6 +51,7 @@
                 android:layout_below="@+id/chat_message_tv"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/user_avatar"
+                android:transitionName="@string/image_transition_name"
                 />
     </me.himanshusoni.chatmessageview.ChatMessageView>
 

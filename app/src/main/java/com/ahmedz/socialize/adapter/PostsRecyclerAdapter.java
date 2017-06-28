@@ -142,7 +142,7 @@ public class PostsRecyclerAdapter extends FirebaseRecyclerAdapter<PostModel,Post
 
 			imageView.setOnClickListener(view -> {
 				if (listener != null)
-					listener.onImageClicked(imageUri);
+					listener.onImageClicked(imageUri, imageView);
 			});
 		}
 

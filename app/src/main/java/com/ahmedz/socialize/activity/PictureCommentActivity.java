@@ -91,7 +91,7 @@ public class PictureCommentActivity extends LoadingActivity {
 
 	@Override
 	protected boolean shouldLoadInitially() {
-		return true;
+		return false;
 	}
 
 	@Override

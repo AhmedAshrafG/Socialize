@@ -232,12 +232,12 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
 	}
 
 	@Override
-	public void onImageClicked(String imageUriStr) {
+	public void onImageClicked(String imageUriStr, ImageView imageView) {
 		Intent intent = new Intent(this, FullScreenImageActivity.class);
 		intent.putExtra(getString(R.string.nickname), userModel.getNickName());
 		intent.putExtra(getString(R.string.avatar), userModel.getAvatar());
 		intent.putExtra(getString(R.string.full_screen_image), imageUriStr);
-		startActivity(intent);
+		startActivityWithSharedTransition(intent, imageView);
 	}
 
 	@Override

@@ -127,7 +127,7 @@ public class PostActivity extends LoadingActivity {
 		Log.d(TAG, "Photo onResult: " + imageUri);
 		PicassoCache.get()
 				.load(uri)
-				.resizeDimen(R.dimen.image_width, R.dimen.zero_dimen)
+				.resizeDimen(R.dimen.image_size, R.dimen.zero_dimen)
 				.into(uploadCheck);
 		uploadCheck.setVisibility(View.VISIBLE);
 	}

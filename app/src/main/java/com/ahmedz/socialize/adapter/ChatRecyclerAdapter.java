@@ -164,7 +164,7 @@ public class ChatRecyclerAdapter extends FirebaseRecyclerAdapter<ChatMessageMode
 							.load(Uri.parse(imageUri));
 				}
 				picassoRequest
-						.resizeDimen(R.dimen.image_width, R.dimen.zero_dimen)
+						.resizeDimen(R.dimen.image_size, R.dimen.zero_dimen)
 						.placeholder(R.drawable.progress_placeholder)
 						.into(imageView); // TODO: 11/30/2016 delete image after the partner sees it.
 			} else {
@@ -172,7 +172,7 @@ public class ChatRecyclerAdapter extends FirebaseRecyclerAdapter<ChatMessageMode
 			}
 			imageView.setOnClickListener(view -> {
 				if (listener != null)
-					listener.imageClicked(chatModel.getImageFile());
+					listener.imageClicked(chatModel.getImageFile(), imageView);
 			});
 		}
 

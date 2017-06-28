@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="user_avatar_size">40dp</dimen>
     <dimen name="default_elevation">4dp</dimen>
-    <dimen name="image_width">200dp</dimen>
+    <dimen name="image_size">200dp</dimen>
     <dimen name="zero_dimen">0dp</dimen>
                 
     <dimen name="profile_pic_size">50dp</dimen>
