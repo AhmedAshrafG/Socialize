@@ -75,4 +75,8 @@
     <string name="imageUri_extra">imageUri</string>
     <string name="desc_extra">description</string>
     <string name="share_using">Share Using..</string>
+    <string name="logged_out_message">Please Login!</string>
+    <string name="post_list_extra">post_list_extra</string>
+    <string name="user_list_extra">user_list_extra</string>
+    <string name="bundle">bundle</string>
 </resources>

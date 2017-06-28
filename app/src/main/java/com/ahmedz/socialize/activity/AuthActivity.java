@@ -61,7 +61,7 @@ public abstract class AuthActivity extends LoadingActivity implements FirebaseAu
 	}
 
 	boolean sessionExists() {
-		return authenticator.verifyAuth();
+		return authenticator.sessionExists();
 	}
 
 	void grantAccess() {

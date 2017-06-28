@@ -6,13 +6,16 @@ import com.ahmedz.socialize.model.ChatMessageModel;
 import com.ahmedz.socialize.model.GroupModel;
 import com.ahmedz.socialize.model.ImageMessageInfo;
 import com.ahmedz.socialize.model.PostModel;
+import com.ahmedz.socialize.model.TimelineWidgetInfo;
 import com.ahmedz.socialize.model.UserModel;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +26,7 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
 
 import static com.ahmedz.socialize.backend.FCM.CloudMessenger.TYPE_CHAT;
 import static com.ahmedz.socialize.model.ChatMessageModel.TYPE_TEXT;
@@ -43,10 +47,7 @@ public class FireBaseDBHelper {
 	private final String CHAT_UID_CHILD = "chatUID";
 	private final String TIME_CHILD = "timeInMillis";
 	private final String NICKNAME_CHILD = "nickName";
-	private String GENDER_CHILD = "gender";
 	private final String AVATAR_CHILD = "avatar";
-	private String ADDRESS_CHILD = "address";
-	private final String PHONE_CHILD = "phone";
 	private final DatabaseReference reference;
 
 	public synchronized static FireBaseDBHelper getInst() {
@@ -236,5 +237,26 @@ public class FireBaseDBHelper {
 		map.put(NICKNAME_CHILD, nickname);
 
 		return RxFirebaseDatabase.updateChildren(userRef, map);
+	}
+
+	public Single<List<PostModel>> getLatestPostsQuery(String groupUID) {
+		Query latestPostsQuery = getPostsQuery(groupUID)
+				.limitToFirst(10);
+		return RxFirebaseDatabase.observeSingleValueEvent(latestPostsQuery, (Function<DataSnapshot, List<PostModel>>) dataSnapshot -> {
+			ArrayList<PostModel> postList = new ArrayList<>();
+			for (DataSnapshot child : dataSnapshot.getChildren()) {
+				PostModel postModel = child.getValue(PostModel.class);
+				postList.add(postModel);
+			}
+			return postList;
+		}).toSingle(new ArrayList<>());
+	}
+
+	public Single<TimelineWidgetInfo> getTimelineWidgetInfo(String groupUID) {
+		return Single.zip(
+				getGroupUsers(groupUID),
+				getLatestPostsQuery(groupUID),
+				(userModels, postModels) -> new TimelineWidgetInfo((ArrayList) userModels, (ArrayList) postModels)
+		);
 	}
 }

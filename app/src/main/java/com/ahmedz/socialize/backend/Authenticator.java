@@ -65,7 +65,7 @@ public class Authenticator {
 		return RxFirebaseAuth.signInWithEmailAndPassword(mAuth, email, password);
 	}
 
-	public boolean verifyAuth() {
+	public boolean sessionExists() {
 		boolean sessionExists = mAuth.getCurrentUser() != null;
 		return sessionExists;
 	}

@@ -24,4 +24,8 @@
     <dimen name="inner_space">8dp</dimen>
     <dimen name="outer_space">16dp</dimen>
     <dimen name="action_bar_height">180dp</dimen>
+    <dimen name="widget_size">200dp</dimen>
+    <dimen name="widget_margin">@dimen/inner_space</dimen>
+    <dimen name="widget_pic_size">30dp</dimen>
+    <dimen name="title_text_size_widget">12sp</dimen>
 </resources>

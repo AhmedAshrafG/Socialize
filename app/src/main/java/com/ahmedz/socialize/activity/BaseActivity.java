@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ahmedz.socialize.handler.DialogHelper;
-import com.ahmedz.socialize.handler.FontProvider;
 import com.ahmedz.socialize.handler.PurposeManager;
 
 import butterknife.ButterKnife;
@@ -18,7 +17,6 @@ import butterknife.ButterKnife;
 public class BaseActivity extends AppCompatActivity {
 	private DialogHelper dialogHelper;
 	PurposeManager purposeManager;
-	final FontProvider fontProvider = FontProvider.getInstance();
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {

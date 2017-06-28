@@ -1,10 +1,13 @@
 package com.ahmedz.socialize.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.database.Exclude;
 
 
 
-public class UserModel {
+public class UserModel implements Parcelable {
 	private String userUID;
 	private String nickName;
 	private String email;
@@ -26,6 +29,42 @@ public class UserModel {
 		this.token = token;
 		this.groupUID = groupUID;
 	}
+
+	protected UserModel(Parcel in) {
+		userUID = in.readString();
+		nickName = in.readString();
+		email = in.readString();
+		token = in.readString();
+		groupUID = in.readString();
+		avatar = in.readString();
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(userUID);
+		dest.writeString(nickName);
+		dest.writeString(email);
+		dest.writeString(token);
+		dest.writeString(groupUID);
+		dest.writeString(avatar);
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	public static final Creator<UserModel> CREATOR = new Creator<UserModel>() {
+		@Override
+		public UserModel createFromParcel(Parcel in) {
+			return new UserModel(in);
+		}
+
+		@Override
+		public UserModel[] newArray(int size) {
+			return new UserModel[size];
+		}
+	};
 
 	public String getUserUID() {
 		return userUID;
