@@ -1,5 +1,6 @@
 package com.ahmedz.socialize.activity;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.ahmedz.socialize.backend.FireBaseStorageHelper;
 import com.ahmedz.socialize.model.PostModel;
 import com.ahmedz.socialize.view.CircleTransform;
 import com.ahmedz.socialize.view.PicassoCache;
+import com.ahmedz.socialize.widget.TimelineWidgetProvider;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -99,11 +101,19 @@ public class PostActivity extends LoadingActivity {
 				.doFinally(this::setLoaded)
 				.subscribe(() -> {
 					showToast(R.string.post_success_toast);
+					sendUpdateBroadcast();
 					finish();
 				}, throwable -> {
 					throwable.printStackTrace();
 					showToast(R.string.post_fail_toast);
 				});
+	}
+
+	private void sendUpdateBroadcast() {
+		Intent intent = new Intent(this, TimelineWidgetProvider.class);
+		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[] { R.xml.appwidget_info });
+		sendBroadcast(intent);
 	}
 
 	@OnClick(R.id.choose_photo)

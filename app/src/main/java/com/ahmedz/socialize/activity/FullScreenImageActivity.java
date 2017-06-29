@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.ahmedz.socialize.R;
 import com.ahmedz.socialize.view.CircleTransform;
 import com.ahmedz.socialize.view.PicassoCache;
-import com.ahmedz.socialize.view.TouchImageView;
 
 import butterknife.Bind;
 
@@ -23,7 +22,7 @@ public class FullScreenImageActivity extends LoadingActivity {
 	@Bind(R.id.usernameTV)
 	TextView usernameTV;
 	@Bind(R.id.imageView)
-	TouchImageView imageView;
+	ImageView imageView;
 	private String username;
 	private String avatarUrl;
 	private String imageUrl;

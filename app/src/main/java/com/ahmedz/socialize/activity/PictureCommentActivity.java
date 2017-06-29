@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.ahmedz.socialize.R;
 import com.ahmedz.socialize.view.CircleTransform;
 import com.ahmedz.socialize.view.PicassoCache;
-import com.ahmedz.socialize.view.TouchImageView;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -27,7 +26,7 @@ public class PictureCommentActivity extends LoadingActivity {
 	@Bind(R.id.usernameTV)
 	TextView usernameTV;
 	@Bind(R.id.imageView)
-	TouchImageView imageView;
+	ImageView imageView;
 	@Bind(R.id.emoji_btn)
 	ImageView emojiBtn;
 	@Bind(R.id.message_input)

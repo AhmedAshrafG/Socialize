@@ -10,7 +10,7 @@
     <include
         layout="@layout/user_header_toolbar"
         />
-    <com.ahmedz.socialize.view.TouchImageView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
