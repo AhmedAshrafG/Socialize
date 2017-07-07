@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.ahmedz.socialize.BuildConfig;
 import com.ahmedz.socialize.R;
 import com.ahmedz.socialize.backend.FireBaseDBHelper;
 import com.ahmedz.socialize.backend.FireBaseStorageHelper;
@@ -47,13 +46,6 @@ public class SignupActivity extends AuthActivity {
 		setContentView(R.layout.activity_signup);
 		setSupportActionBar(toolbar);
 		waiting = getIntent().hasExtra(getString(R.string.waiting_extra));
-
-		if (BuildConfig.DEBUG) {
-			inputUsername.setText("ahmed");
-			inputEmail.setText("ahmed.ashraf33@yahoo.com");
-			inputPassword.setText("ahmedz333");
-			inputRepeatPassword.setText("ahmedz333");
-		}
 	}
 
 	@OnClick(R.id.sign_in_button)
