@@ -4,11 +4,11 @@ Final Project of the Udacity Android Nanodegree program.
 
 ## Screenshots
 
-<img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/signup.png" width="15%"></img> 
-<img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/chat.png" width="15%"></img> 
-<img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/drawer.png" width="15%"></img> 
-<img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/timeline.png" width="15%"></img> 
-<img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/post_details.png" width="15%"></img> 
+<img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/signup.png" width="20%"></img> 
+<img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/chat.png" width="20%"></img> 
+<img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/drawer.png" width="20%"></img> 
+<img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/timeline.png" width="20%"></img> 
+<img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/post_details.png" width="20%"></img> 
 
 ## Features
 
