@@ -21,6 +21,7 @@ import com.ahmedz.socialize.callback.ItemCountChangeListener;
 import com.ahmedz.socialize.callback.PostItemListener;
 import com.ahmedz.socialize.model.PostModel;
 import com.ahmedz.socialize.model.UserModel;
+import com.ahmedz.socialize.view.CircleTransform;
 import com.ahmedz.socialize.view.PicassoCache;
 import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.firebase.database.Query;
@@ -100,6 +101,7 @@ public class TimelineActivity extends AuthActivity implements PostItemListener, 
                    PicassoCache.get()
 	                       .load(uri)
 		                   .placeholder(placeholder)
+		                   .transform(new CircleTransform())
 	                       .error(R.drawable.ic_person)
 	                       .into(imageView);
                }
