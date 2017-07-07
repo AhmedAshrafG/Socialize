@@ -2,7 +2,7 @@
 
 Final Project of the Udacity Android Nanodegree program.
 
-##Screenshots
+## Screenshots
 
 <img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/signup.png" width="15%"></img> 
 <img src="https://raw.githubusercontent.com/AhMeDz333/Socialize/master/screenshots/chat.png" width="15%"></img> 
