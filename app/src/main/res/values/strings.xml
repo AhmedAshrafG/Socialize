@@ -81,4 +81,5 @@
     <string name="bundle">bundle</string>
     <string name="image_transition_name">imageName</string>
     <string name="sender_nickname">sender_nickname</string>
+    <string name="post_activity_label">Add Post</string>
 </resources>

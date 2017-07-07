@@ -121,7 +121,7 @@
         </activity>
         <activity
             android:name=".activity.PostActivity"
-            android:label=""
+            android:label="@string/post_activity_label"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"
